@@ -36,13 +36,14 @@ Note.prototype.updInc = function(array) {
   return news.length == 0 ? null : news;
 };
 
-Note.prototype.insert = function(text) {
+Note.prototype.insert = function(input) {
+  var text = (input !== '') ? input : '_';
   var tags = this.parse(text);
   this._content = text;
   var news = this.updInc(tags);
   if(news) {
      return news
-     }
+  }
 };
 
 Note.prototype.showText = function() {

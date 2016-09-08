@@ -1,7 +1,12 @@
 var Note = require('./note.js')
 
-var Storage = function() {
+var Storage = function(name) {
+  this._projectName = name;
   this.set('_canvas', '@@Base@@');
+};
+
+Storage.prototype.getName = function() {
+  return this._projectName;
 };
 
 Storage.prototype.add = function(noteName) {
@@ -43,7 +48,7 @@ Storage.prototype.concat = function(noteName) {
     var partToPass = self.concat(note);
     complit = complit.replace(regEx, partToPass);
   });
-  var complitInTags = "<span id='"+ noteName +"' class='piece'>" + complit + "<\/span>";
+  var complitInTags = "<span id='"+ noteName +"' data-name='" + noteName + "'class='piece'>" + complit + "</span>";
   return complitInTags;
 };
 

@@ -20,12 +20,97 @@ var Api = function() {
 // };
 
 Api.prototype.getTables = async (function() {
-	return await (this.r.tableList().run());
+	var tables = await ( this.r.tableList().run() );
+	console.log(tables);
 });
 
-Api.prototype.getTable = function(table) {
-	this.r.table(table).run().then(res => console.log(res));
-};
+Api.prototype.getTable = async (function(table) {
+	var result = await( this.r.table(table).run() );
+	console.log(result);
+});
+
+Api.prototype.createUser = async (function(user) {
+	var proto = {
+		nickname: user.nickname,
+		password: user.password,
+		email: user.email,
+		projects: []
+	};
+	var result = await( this.r.table('users').insert(proto).run() );
+	console.log(result);
+});
+
+//Возвращает ключ, если пользователь существует
+Api.prototype.checkUser = async (function(user) {
+
+});
+
+//Обновление данных пользователя
+Api.prototype.updateUser = async (function(user) {
+
+});
+
+//Возвращает информацию о пользователе
+Api.prototype.getUser = async (function(userId) {
+	var user = await( this.r.table('users').get(userId).insert(proto).run() );
+	console.log(user);
+});
+
+//Создание проета в таблице 'projects'
+//и размещение ключа созданного проекта в поле 'projects' таблицы 'users'
+Api.prototype.createProject = async( function(userId, data) {
+	var project = {
+		real_name: data.real_name,
+		work_name: data.work_name,
+		state: 'live',
+		notes: [
+			{
+				name: 'Base',
+				content: '_NEW_NOTE_'
+			}
+		]
+	};
+	var result = await( this.r.table('projects').insert(project).run() );
+	var projectKey = result.generated_keys[0];
+
+	var projRefer = {
+		real_name: data.real_name,
+		work_name: data.work_name,
+		_id: projectKey
+	};
+	var res = await( this.r.table('users').get(userId)
+		.update(
+			{projects: this.r.row('projects').append(projRefer)}
+		).run() );
+});
+
+Api.prototype.deleteProject = async( function(userId, projectId) {
+	var projDeleteState = await( this.r
+		.table('users')
+		.get(userId)
+		.update({projects: 
+			this.r.row('projects')
+			.filter(it => it('_id').eq(projectId).not())
+		})
+		.run());
+
+	var referDeleteState = await( this.r
+		.table('projects')
+		.get(projectId)
+		.update({state: "dead"}, {durability: "soft"})
+		.run());
+
+	if(projDeleteState.deleted && referDeleteState.deleted) {
+		return 'Project was deleted.'
+	} else {
+		return 'There is no such project in ' + projDeleteState.deleted === '0' ? 'user folder' : 'project folder';
+	}
+});
+
+Api.prototype.simp = async( function() {
+	var res = await( this.r.table('buter').run().then(res => res) );
+	console.log('res', res);
+});
 
 //r.db('reguletter').table('users').get('samosval').run().then(res => console.log(res));
 
