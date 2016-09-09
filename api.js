@@ -84,7 +84,7 @@ Api.prototype.createProject = async( function(userId, data) {
 		).run() );
 });
 
-Api.prototype.getProject = async( function(userId, data) {
+Api.prototype.getProject = async( function(projId) {
 	
 });
 
@@ -106,11 +106,7 @@ Api.prototype.deleteProject = async( function(userId, projectId) {
 		.update({state: "dead"}, {durability: "soft"})
 		.run());
 
-	if(projDeleteState.deleted && referDeleteState.deleted) {
-		return 'Project was deleted.'
-	} else {
-		return 'There is no such project in ' + projDeleteState.deleted === '0' ? 'user folder' : 'project folder';
-	}
+	return (projDeleteState.deleted !== '0' ? 'Проект удален. ' : 'Не удалось удалить объект. ') + (referDeleteState.deleted !== '0' ? 'И ссылка на него.' : '')
 });
 
 Api.prototype.simp = async( function() {
