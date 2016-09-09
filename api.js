@@ -24,7 +24,7 @@ Api.prototype.getTables = async (function() {
 	console.log(tables);
 });
 
-Api.prototype.getTable = async (function(table) {
+Api.prototype.getOneTable = async (function(table) {
 	var result = await( this.r.table(table).run() );
 	console.log(result);
 });
@@ -84,6 +84,12 @@ Api.prototype.createProject = async( function(userId, data) {
 		).run() );
 });
 
+Api.prototype.getProject = async( function(userId, data) {
+	
+});
+
+//Удаление проекта: сначала удаляется проект из таблицы 'projects',
+//а затем уже соответствующий проект удаляется из таблцы 'users'
 Api.prototype.deleteProject = async( function(userId, projectId) {
 	var projDeleteState = await( this.r
 		.table('users')

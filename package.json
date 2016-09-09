@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "asyncawait": "^1.0.6"
+    "asyncawait": "^1.0.6",
+    "jsreport": "^1.0.9"
   },
   "devDependencies": {},
   "scripts": {

@@ -2,9 +2,6 @@ r = require('rethinkdbdash')({
 		db: 'reguletter'
 	});
 
-r.simp();
-
-
 //r.table('users').run().then(res => console.log(res));
 
 // r.table('users')

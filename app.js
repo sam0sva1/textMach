@@ -11,6 +11,6 @@ var db = new api();
 // };
 // db.createProject(userId, newProject);
 
-db.deleteProject('fadflkjaf', 'asfoiafoh').then(res => console.log(res));
+//db.deleteProject('fadflkjaf', 'asfoiafoh').then(res => console.log(res));
 
 // db.createUser(newUser);
