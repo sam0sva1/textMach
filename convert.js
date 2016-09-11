@@ -1,4 +1,3 @@
-// var http = require('http');
 var jsreport = require('jsreport');
 var fs = require('fs');
 
@@ -7,8 +6,9 @@ var text = "<style type='text/css'>/*GRIDE*/.message__frame{box-sizing: border-b
 var content = charset + text;
 
 
-  jsreport.render({ template: { content: content, engine: 'jsrender', recipe: 'phantom-pdf' } }).then(function(out) {
-    out.stream.pipe(fs.createWriteStream('./result')); //Вместо потока на запись файла можно указать res внутри express
-  }).catch(function(e) {    
-    res.end(e.message);
-  });
+jsreport.render({ template: { content: content, engine: 'jsrender', recipe: 'phantom-pdf' } })
+	.then(function(out) {
+		out.stream.pipe(fs.createWriteStream('./result')); //Вместо потока на запись файла можно указать res внутри express
+	}).catch(function(e) {    
+		res.end(e.message);
+	});

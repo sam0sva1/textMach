@@ -5,7 +5,9 @@
   "main": "main.js",
   "dependencies": {
     "asyncawait": "^1.0.6",
-    "jsreport": "^1.0.9"
+    "jsreport": "^1.0.9",
+    "nodemailer": "^0.7.1",
+    "rethinkdbdash": "^2.3.21"
   },
   "devDependencies": {},
   "scripts": {
