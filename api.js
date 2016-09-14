@@ -7,9 +7,8 @@ var async = require('asyncawait/async');
 
 var Api = function() {
 	this.r = require('rethinkdbdash')({
-		host: 'reguletter.ru',
+		host: 'localhost',
 		port: 28015,
-		ssl: true,
 		db: 'reguletter'
 	});
 

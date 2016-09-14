@@ -1,17 +1,25 @@
+var express = require('express');
+var app = express();
+
 var api = require("./api.js");
 var db = new api();
-//db.getTables();
 
-db.getOneTable('users');
+app.use(express.static('static/css'));
 
-// var userId = 'de53d795-4091-496c-9e5d-e2c9bba2dd4f';
-// //var projId = '97f0a8ca-3850-4dd8-a893-bb5248df7cc3';
-// var newProject = {
-// 	real_name: 'Великие горы',
-// 	work_name: 'mountains'
-// };
-// db.createProject(userId, newProject);
+var handlebars = require('express-handlebars')
+	.create({
+		defaultLayout: 'main',
+		extname: '.hbs'
+	});
+app.engine('hbs', handlebars.engine);
+app.set('view engine', 'hbs');
 
-//db.deleteProject(userId, projId).then(res => console.log(res));
+app.set('port', process.argv[2] || 3000);
 
-// db.createUser(newUser);
+app.get('/', (req, res) => {
+	res.render('home');
+});
+
+app.listen(app.get('port'), function() {
+	console.log(`Server works on ${app.get('port')}.`);
+});
